@@ -14,9 +14,9 @@ public class SawManager {
                 filter( saw -> saw.getPrice() > price).
                 toList();
     }
-    private final List<Saws> sawList = new LinkedList<>();
+
     private void addSaw(Saws sawToAdd){
-        this.sawList.add(sawToAdd);
+        this.saws.add(sawToAdd);
     };
     public static void main(String ... strings){
         List<Saws> saws = new LinkedList<>();
@@ -27,7 +27,7 @@ public class SawManager {
         sawManager.addSaw(new Chainsaw("Stihl", 750, 2.8, 2.65, false));
         sawManager.addSaw(new ElectricSaw());
         sawManager.addSaw(new ElectricSaw("R2D2", 1000, 87, false));
-       for (Saws saw : sawManager.sawList){
+       for (Saws saw : sawManager.saws){
            System.out.println(saw);
        }
        System.out.println("Saws more expencive than setted price:");
@@ -36,8 +36,9 @@ public class SawManager {
            System.out.println(saw);
        }
            System.out.println("Automatic saws:");
-       for (Saws saws2 : sawManager.findAllAutomatic()){
-           System.out.println(saws2);
+        var saws2 = sawManager.findAllAutomatic();
+        for (Saws saw : saws1){
+            System.out.println(saw);
        }
     }
 }
