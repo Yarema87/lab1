@@ -18,7 +18,7 @@ public class CircularSaw extends Saw{
         setWorking(false);
         return getWorking();
     }
-    public String convertingToString(){
+    public String convertToString(){
         CircularSaw circularsaw = new CircularSaw();
         return circularsaw + "";
     }
