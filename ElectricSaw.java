@@ -21,7 +21,7 @@ public class ElectricSaw extends Saw {
         setWorking(false);
         return getWorking();
     }
-    public String convertingToString(){
+    public String convertToString(){
         ElectricSaw electricSaw = new ElectricSaw();
         return electricSaw + "";
     }
