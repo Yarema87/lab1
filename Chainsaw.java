@@ -1,5 +1,10 @@
-package ua.lviv.iot.algo.part1.lab1;
-import lombok.*;
+package main.java.ua.lviv.iot.algo.part1.lab1;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,29 +15,33 @@ import lombok.*;
 public class Chainsaw extends Saw {
     private double fuelTankCapacity;
     private double fuelLevel;
-    public boolean start(){
+    public boolean start() {
         setWorking(true);
         return getWorking();
     }
-    public boolean stop(){
+    public boolean stop() {
         setWorking(false);
         return getWorking();
     }
-    public double charge(double fuel){
+    public double charge(final double fuel) {
         this.fuelLevel = fuelLevel + fuel;
         return this.fuelLevel;
     }
-    public String convertToString(){
+    public String convertToString() {
         Chainsaw chainsaw = new Chainsaw();
         return chainsaw + "";
     }
     @Override
     public double getRemainingWorkTime() {
-        return (fuelLevel / 0.6);
+        double consumptionFuelPerHour = 0.6;
+        return fuelLevel / consumptionFuelPerHour;
     }
-    public Chainsaw(String brand, int power, boolean isWorking, double workingTimeInHours, double fuelTankCapacity, double fuelLevel){
+    public Chainsaw(final String brand, final int power,
+                    final boolean isWorking, final double workingTimeInHours,
+                    final double fuelTankCapacity, final double fuelLevel) {
         super(brand, power, isWorking, workingTimeInHours);
         this.fuelTankCapacity = fuelTankCapacity;
         this.fuelLevel = fuelLevel;
     }
 }
+
