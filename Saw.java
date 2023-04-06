@@ -1,6 +1,10 @@
-package ua.lviv.iot.algo.part1.lab1;
+package main.java.ua.lviv.iot.algo.part1.lab1;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +17,7 @@ public abstract class Saw {
     private boolean isWorking = false;
     private double workTimeInHours;
     public abstract double getRemainingWorkTime();
-    public boolean getWorking(){
+    public boolean getWorking() {
         return isWorking;
     }
 }
