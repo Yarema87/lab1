@@ -1,5 +1,10 @@
-package ua.lviv.iot.algo.part1.lab1;
-import lombok.*;
+ppackage main.java.ua.lviv.iot.algo.part1.lab1;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -7,14 +12,14 @@ import lombok.*;
 @Getter
 @ToString
 
-public class Jigsaw extends Saw{
+public class Jigsaw extends Saw {
     private double widthOfCanvas;
     private double lengthOfCanvas;
-    public boolean start(){
+    public boolean start() {
         setWorking(true);
         return getWorking();
     }
-    public boolean stop(){
+    public boolean stop() {
         setWorking(false);
         return getWorking();
     }
@@ -24,9 +29,12 @@ public class Jigsaw extends Saw{
     }
     @Override
     public double getRemainingWorkTime() {
-        return 8;
+        int timeWithElectricityOn = 8;
+        return timeWithElectricityOn;
     }
-    public Jigsaw(String brand, int power, boolean isWorking, double workingTimeInHours, double widthOfCanvas, double lengthOfCanvas){
+    public Jigsaw(final String brand, final int power, final boolean isWorking,
+                  final double workingTimeInHours, final double widthOfCanvas,
+                  final double lengthOfCanvas) {
         super(brand, power, isWorking, workingTimeInHours);
         this.widthOfCanvas = widthOfCanvas;
         this.lengthOfCanvas = lengthOfCanvas;
