@@ -6,6 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -13,6 +18,7 @@ import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 @ToString
 
 public class Jigsaw extends Saw {
+    public static final String HEADERS = "widthOfCanvas, lengthOfCanvas, ";
     private double widthOfCanvas;
     private double lengthOfCanvas;
     public boolean start() {
@@ -38,5 +44,29 @@ public class Jigsaw extends Saw {
         super(brand, power, isWorking, workingTimeInHours);
         this.widthOfCanvas = widthOfCanvas;
         this.lengthOfCanvas = lengthOfCanvas;
+    }
+    @Override
+    public void writeToFile(List<Saw> saws) {
+        try {
+            File file = new File("result.csv");
+            FileWriter writer = new FileWriter(file);
+            writer.write(Jigsaw.getHeaders());
+            writer.write(Saw.getHeaders());
+            for (Saw saws2: saws) {
+                writer.write(saws2.toCSV());
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static String getHeaders() {
+        return HEADERS;
+    }
+    public String toCSV() {
+        return String.format("%s, %s, %s, %s, %s, %s\n", getLengthOfCanvas(),
+                getWidthOfCanvas(), getBrand(),
+                getPower(), getWorking(), getWorkTimeInHours());
     }
 }

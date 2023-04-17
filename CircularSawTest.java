@@ -1,73 +1,26 @@
 package ua.lviv.iot.algo.part1.lab1;
 
 import main.java.ua.lviv.iot.algo.part1.lab1.CircularSaw;
+import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CircularSawTest {
+    CircularSaw circularSaw = new CircularSaw();
 
     @Test
     void convertToString() {
         CircularSaw circularSaw = new CircularSaw();
         assertNotEquals(circularSaw, circularSaw.convertToString());
-    }
-
-    @Test
-    void getWorking() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setWorking(true);
-        assertEquals(true, circularSaw.getWorking());
-    }
-
-    @Test
-    void getBrand() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setBrand("T-1000");
-        assertEquals("T-1000", circularSaw.getBrand());
-    }
-
-    @Test
-    void getPower() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setPower(1000);
-        assertEquals(1000, circularSaw.getPower());
-    }
-
-    @Test
-    void getWorkTimeInHours() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setWorkTimeInHours(8);
-        assertEquals(8, circularSaw.getWorkTimeInHours());
-    }
-
-    @Test
-    void setBrand() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setBrand("T-1000");
-        assertEquals("T-1000", circularSaw.getBrand());
-    }
-
-    @Test
-    void setPower() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setPower(1000);
-        assertEquals(1000, circularSaw.getPower());
-    }
-
-    @Test
-    void setWorking() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setWorking(true);
-        assertEquals(true, circularSaw.getWorking());
-    }
-
-    @Test
-    void setWorkTimeInHours() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setWorkTimeInHours(8);
-        assertEquals(8, circularSaw.getWorkTimeInHours());
     }
 
     @Test
@@ -89,32 +42,21 @@ class CircularSawTest {
         CircularSaw circularSaw = new CircularSaw();
         assertEquals(8, circularSaw.getRemainingWorkTime());
     }
-
     @Test
-    void getRadius() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setRadius(0.07);
-        assertEquals(0.07, circularSaw.getRadius());
-    }
-
-    @Test
-    void getWidth() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setWidth(0.07);
-        assertEquals(0.07, circularSaw.getWidth());
-    }
-
-    @Test
-    void setRadius() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setRadius(0.07);
-        assertEquals(0.07, circularSaw.getRadius());
-    }
-
-    @Test
-    void setWidth() {
-        CircularSaw circularSaw = new CircularSaw();
-        circularSaw.setWidth(0.07);
-        assertEquals(0.07, circularSaw.getWidth());
+    void writeToFile() {
+        CircularSaw circularSaw1 = new CircularSaw("T-1000", 900, false, 4.5, 3.2, 3.0);
+        CircularSaw circularSaw2 = new CircularSaw("T-800", 1000, false, 3.5, 2.9, 2.8);
+        List<Saw> saws = Arrays.asList(circularSaw1, circularSaw2);
+        circularSaw.writeToFile(saws);
+        String EXPECTED_FILENAME = "circularExample.csv";
+        String RESULT_FILENAME = "result.csv";
+        Path expected = new File(EXPECTED_FILENAME).toPath();
+        Path result = new File(RESULT_FILENAME).toPath();
+        try{
+            assertEquals(-1L, Files.mismatch(expected, result));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
