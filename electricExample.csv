@@ -1,0 +1,3 @@
+batteryCharge, brand, power, isWorking, workTimeInHours
+60, T-1000, 900, false, 4.5
+90, T-800, 1000, false, 3.5

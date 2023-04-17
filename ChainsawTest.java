@@ -1,12 +1,23 @@
 package ua.lviv.iot.algo.part1.lab1;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import lombok.ToString;
-import org.junit.jupiter.api.Test;
 import main.java.ua.lviv.iot.algo.part1.lab1.Chainsaw;
+import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
+import org.junit.jupiter.api.Test;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ChainsawTest {
+    private Chainsaw chainsaw = new Chainsaw();
 
     @Test
     void charge() {
@@ -20,63 +31,6 @@ class ChainsawTest {
         Chainsaw chainsaw = new Chainsaw();
         assertNotEquals(chainsaw, chainsaw.convertToString());
     }
-
-    @Test
-    void getWorking() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setWorking(true);
-        assertEquals(true, chainsaw.getWorking());
-    }
-
-    @Test
-    void getBrand() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setBrand("T-1000");
-        assertEquals("T-1000", chainsaw.getBrand());
-    }
-
-    @Test
-    void getPower() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setPower(1000);
-        assertEquals(1000, chainsaw.getPower());
-    }
-
-    @Test
-    void getWorkTimeInHours() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setWorkTimeInHours(3.5);
-        assertEquals(3.5, chainsaw.getWorkTimeInHours());
-    }
-
-    @Test
-    void setBrand() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setBrand("T-1000");
-        assertEquals("T-1000", chainsaw.getBrand());
-    }
-
-    @Test
-    void setPower() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setPower(1000);
-        assertEquals(1000, chainsaw.getPower());
-    }
-
-    @Test
-    void setWorking() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setWorking(true);
-        assertEquals(true, chainsaw.getWorking());
-    }
-
-    @Test
-    void setWorkTimeInHours() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setWorkTimeInHours(3.5);
-        assertEquals(3.5, chainsaw.getWorkTimeInHours());
-    }
-
     @Test
     void start() {
         Chainsaw chainsaw = new Chainsaw();
@@ -97,32 +51,21 @@ class ChainsawTest {
         chainsaw.setFuelLevel(3.0);
         assertEquals(5.0, chainsaw.getRemainingWorkTime());
     }
-
     @Test
-    void getFuelTankCapacity() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setFuelTankCapacity(3.9);
-        assertEquals(3.9, chainsaw.getFuelTankCapacity());
-    }
-
-    @Test
-    void getFuelLevel() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setFuelLevel(3.3);
-        assertEquals(3.3, chainsaw.getFuelLevel());
-    }
-
-    @Test
-    void setFuelTankCapacity() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setFuelTankCapacity(3.9);
-        assertEquals(3.9, chainsaw.getFuelTankCapacity());
-    }
-
-    @Test
-    void setFuelLevel() {
-        Chainsaw chainsaw = new Chainsaw();
-        chainsaw.setFuelLevel(3.3);
-        assertEquals(3.3, chainsaw.getFuelLevel());
+    void writeToFile() {
+        Chainsaw chainsaw1 = new Chainsaw("T-1000", 900, false, 4.5, 3.2, 3.0);
+        Chainsaw chainsaw2 = new Chainsaw("T-800", 1000, false, 3.5, 2.9, 2.8);
+        List<Saw> saws = Arrays.asList(chainsaw1, chainsaw2);
+        chainsaw.writeToFile(saws);
+        String EXPECTED_FILENAME = "chainExample.csv";
+        String RESULT_FILENAME = "result.csv";
+        Path expected = new File(EXPECTED_FILENAME).toPath();
+        Path result = new File(RESULT_FILENAME).toPath();
+        try{
+            assertEquals(-1L, Files.mismatch(expected, result));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

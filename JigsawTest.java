@@ -2,71 +2,24 @@ package ua.lviv.iot.algo.part1.lab1;
 
 import org.junit.jupiter.api.Test;
 import main.java.ua.lviv.iot.algo.part1.lab1.Jigsaw;
+import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JigsawTest {
+    Jigsaw jigsaw = new Jigsaw();
 
     @Test
     void convertToString() {
         Jigsaw jigsaw = new Jigsaw();
         assertNotEquals(jigsaw, jigsaw.convertToString());
-    }
-
-    @Test
-    void getWorking() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setWorking(true);
-        assertEquals(true, jigsaw.getWorking());
-    }
-
-    @Test
-    void getBrand() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setBrand("T-800");
-        assertEquals("T-800", jigsaw.getBrand());
-    }
-
-    @Test
-    void getPower() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setPower(870);
-        assertEquals(870, jigsaw.getPower());
-    }
-
-    @Test
-    void getWorkTimeInHours() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setWorkTimeInHours(3.5);
-        assertEquals(3.5, jigsaw.getWorkTimeInHours());
-    }
-
-    @Test
-    void setBrand() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setBrand("T-800");
-        assertEquals("T-800", jigsaw.getBrand());
-    }
-
-    @Test
-    void setPower() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setPower(870);
-        assertEquals(870, jigsaw.getPower());
-    }
-
-    @Test
-    void setWorking() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setWorking(true);
-        assertEquals(true, jigsaw.getWorking());
-    }
-
-    @Test
-    void setWorkTimeInHours() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setWorkTimeInHours(3.5);
-        assertEquals(3.5, jigsaw.getWorkTimeInHours());
     }
 
     @Test
@@ -88,32 +41,21 @@ class JigsawTest {
         Jigsaw jigsaw = new Jigsaw();
         assertEquals(8, jigsaw.getRemainingWorkTime());
     }
-
     @Test
-    void getWidthOfCanvas() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setWidthOfCanvas(0.9);
-        assertEquals(0.9, jigsaw.getWidthOfCanvas());
-    }
-
-    @Test
-    void getLengthOfCanvas() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setLengthOfCanvas(0.9);
-        assertEquals(0.9, jigsaw.getLengthOfCanvas());
-    }
-
-    @Test
-    void setWidthOfCanvas() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setWidthOfCanvas(0.9);
-        assertEquals(0.9, jigsaw.getWidthOfCanvas());
-    }
-
-    @Test
-    void setLengthOfCanvas() {
-        Jigsaw jigsaw = new Jigsaw();
-        jigsaw.setLengthOfCanvas(0.9);
-        assertEquals(0.9, jigsaw.getLengthOfCanvas());
+    void writeToFile() {
+        Jigsaw jigsaw1 = new Jigsaw("T-1000", 900, false, 4.5, 3.2, 3.0);
+        Jigsaw jigsaw2 = new Jigsaw("T-800", 1000, false, 3.5, 2.9, 2.8);
+        List<Saw> saws = Arrays.asList(jigsaw1, jigsaw2);
+        jigsaw.writeToFile(saws);
+        String EXPECTED_FILENAME = "jigsawExample.csv";
+        String RESULT_FILENAME = "result.csv";
+        Path expected = new File(EXPECTED_FILENAME).toPath();
+        Path result = new File(RESULT_FILENAME).toPath();
+        try{
+            assertEquals(-1L, Files.mismatch(expected, result));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

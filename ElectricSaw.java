@@ -6,6 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -13,6 +18,7 @@ import main.java.ua.lviv.iot.algo.part1.lab1.Saw;
 @ToString
 
 public class ElectricSaw extends Saw {
+    public static final String HEADERS = "batteryCharge, ";
     private int batteryCharge;
     public double charge(final int charge) {
         this.batteryCharge = batteryCharge + charge;
@@ -41,5 +47,29 @@ public class ElectricSaw extends Saw {
                        final int batteryCharge) {
         super(brand, power, isWorking, workingTimeInHours);
         this.batteryCharge = batteryCharge;
+    }
+   @Override
+    public void writeToFile(List<Saw> saws) {
+        try {
+            File file = new File("result.csv");
+            FileWriter writer = new FileWriter(file);
+            writer.write(ElectricSaw.getHeaders());
+            writer.write(Saw.getHeaders());
+            for (Saw saws2: saws) {
+                writer.write(saws2.toCSV());
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static String getHeaders() {
+        return HEADERS;
+    }
+    @Override
+    public String toCSV() {
+        return String.format("%s, %s, %s, %s, %s\n", getBatteryCharge(), getBrand(),
+                getPower(), getWorking(), getWorkTimeInHours());
     }
 }
